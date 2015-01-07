@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-require 'rt_api/version'
-require 'rt_api/connection'
+require_relative 'rt_api/version'
+require_relative 'rt_api/connection'
 
 module RTApi
 end
