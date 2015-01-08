@@ -8,7 +8,7 @@ module RTApi
 
     def initialize(options = {})
       @connection = Connection.new(options.fetch(:connection, {}))
-      raise RTApi::ConnectionError unless @connection.valid?
+      raise RTApi::ConnectionError.new('The connection arguments are invalid.') unless @connection.valid?
     end
   end
 end

@@ -26,7 +26,7 @@ module RTApi
           end
 
           it 'should throw an RTApi::ConnectionError' do
-            expect(RTApi::Session.new).to raise_error(RTApi::ConnectionError)
+            expect{RTApi::Session.new}.to raise_error(RTApi::ConnectionError)
           end
         end
       end

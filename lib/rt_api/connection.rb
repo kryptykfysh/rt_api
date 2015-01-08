@@ -21,13 +21,9 @@ module RTApi
     attr_reader :path
 
     def initialize(options_hash = {})
-      begin
-        set_attributes(options_hash)
-        @path = options_hash[:path] || ENV['rt_api_path'] || RTApi::DEFAULT_PATH
-        raise RTApi::ConnectionError.new('The connection arguments are invalid.') unless self.valid?
-      rescue RTApi::ConnectionError => e
-        false
-      end
+      set_attributes(options_hash)
+      @path = options_hash[:path] || ENV['rt_api_path'] || RTApi::DEFAULT_PATH
+      # raise RTApi::ConnectionError.new('The connection arguments are invalid.') unless self.valid?
     end
 
     def full_path

@@ -14,6 +14,12 @@ module RTApi
     let(:connection) { RTApi::Connection.new }
 
     describe 'attributes' do
+      before do
+        allow_any_instance_of(RTApi::Connection).to receive(:valid?).and_return(true)
+      end
+
+      let(:connection) { RTApi::Connection.new }
+
       specify { should respond_to :username }
       specify { should respond_to :password }
       specify { should respond_to :base_url }
@@ -30,23 +36,32 @@ module RTApi
     end
 
     describe 'methods' do
-      specify { should respond_to :full_path  }
-      specify { should respond_to :valid?     }
+      describe 'general' do
 
-      describe '::new' do
-        context 'when called with no parameters' do
-          [%w(user username), %w(pass password), %w(url base_url), %w(path path)].each do |env_var, attribute|
-            it "should set @#{attribute} to environment variable rt_api_#{env_var}" do
-              expect(connection.instance_variable_get("@#{attribute}"))
-                .to eq(ENV["rt_api_#{env_var}"])
+        before do
+          allow_any_instance_of(RTApi::Connection).to receive(:valid?).and_return(true)
+        end
+
+        let(:connection) { RTApi::Connection.new }
+
+        specify { should respond_to :full_path  }
+        specify { should respond_to :valid?     }
+
+        describe '::new' do
+          context 'when called with no parameters and valid environment variables' do
+            [%w(user username), %w(pass password), %w(url base_url), %w(path path)].each do |env_var, attribute|
+              it "should set @#{attribute} to environment variable rt_api_#{env_var}" do
+                expect(connection.instance_variable_get("@#{attribute}"))
+                  .to eq(ENV["rt_api_#{env_var}"])
+              end
             end
           end
         end
-      end
 
-      describe '#full_path' do
-        it 'should return a concatenation of @base_url and @path' do
-          expect(connection.full_path).to eq(connection.base_url + connection.path)
+        describe '#full_path' do
+          it 'should return a concatenation of @base_url and @path' do
+            expect(connection.full_path).to eq(connection.base_url + connection.path)
+          end
         end
       end
 
@@ -56,12 +71,32 @@ module RTApi
             allow(RestClient::Request).to receive(:execute).and_return("RT/3.8.2 200 Ok\n\n# Invalid object specification: 'index.html'\n\nid: index.html\n\n")
           end
 
+          let(:connection) { RTApi::Connection.new }
+
           it 'should return true' do
             expect(connection.valid?).to be true
           end
         end
 
         context 'with incorrect connection information' do
+          before do
+            allow_any_instance_of(RestClient::Request).to receive(:execute).and_return('Wibble')
+          end
+
+          let(:connection) { RTApi::Connection.new }
+
+          it 'should return false' do
+            expect(connection.valid?).to be false
+          end
+        end
+
+        context 'when RestClient thorws an error' do
+          before do
+            allow_any_instance_of(RestClient::Request).to receive(:execute).and_raise('RestClientError')
+          end
+
+          let(:connection) { RTApi::Connection.new }
+
           it 'should return false' do
             expect(connection.valid?).to be false
           end
