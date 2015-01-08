@@ -30,6 +30,9 @@ module RTApi
     end
 
     describe 'methods' do
+      specify { should respond_to :full_path  }
+      specify { should respond_to :valid?     }
+
       describe '::new' do
         context 'when called with no parameters' do
           [%w(user username), %w(pass password), %w(url base_url), %w(path path)].each do |env_var, attribute|
@@ -44,6 +47,24 @@ module RTApi
       describe '#full_path' do
         it 'should return a concatenation of @base_url and @path' do
           expect(connection.full_path).to eq(connection.base_url + connection.path)
+        end
+      end
+
+      describe '#valid?' do
+        context 'with correct connection information' do
+          before do
+            allow(RestClient::Request).to receive(:execute).and_return("RT/3.8.2 200 Ok\n\n# Invalid object specification: 'index.html'\n\nid: index.html\n\n")
+          end
+
+          it 'should return true' do
+            expect(connection.valid?).to be true
+          end
+        end
+
+        context 'with incorrect connection information' do
+          it 'should return false' do
+            expect(connection.valid?).to be false
+          end
         end
       end
     end
