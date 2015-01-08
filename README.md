@@ -35,6 +35,7 @@ object:
       * rt_api_user
       * rt_api_pass
       * rt_api_url
+
     An optional rt_api_path variable can be set, if you're not using the API's
     default '/REST/1.0/' path.
 
@@ -44,5 +45,5 @@ object:
       ```ruby
       RTApi::Session.new({ connection: { username: 'test_user', password: 'test_pass', base_url: 'http://test.com'})
       ```
-    This method of seesion creation also supports an options :path element.
+    This method of seesion creation also supports an optional :path element.
 
