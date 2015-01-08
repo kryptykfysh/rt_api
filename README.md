@@ -19,12 +19,30 @@ Or install it yourself as:
 
 ## Usage
 
-Just use the damn thing.
+The primary interface is through the RTApi::Session object. When initialized,
+this will set it's @connection to an RTApi::Connection instance. This
+This connection will be tested for validity on creation and throw an
+RTApi::ConnectionError if it cannot receive a response from the RT instance
+specified.
 
-## Contributing
+### Specifying connection settings
 
-1. Fork it ( https://github.com/[my-github-username]/rt_api/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+There are two methods for passing connection settings on creation of a Session
+object:
+
+1.  Setting Environment Variables
+    The following environment variables are required:
+      * rt_api_user
+      * rt_api_pass
+      * rt_api_url
+    An optional rt_api_path variable can be set, if you're not using the API's
+    default '/REST/1.0/' path.
+
+2.  Passing a :connection hash
+    As an example:
+
+      ```ruby
+      RTApi::Session.new({ connection: { username: 'test_user', password: 'test_pass', base_url: 'http://test.com'})
+      ```
+    This method of seesion creation also supports an options :path element.
+
