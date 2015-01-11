@@ -32,16 +32,23 @@ module RTApi
     end
 
     def set_basic_ticket_data
-      @current_ticket.parse_basic_ticket_data(RestClient::Request.execute(
-        url: "#{connection.full_path}ticket/#{@current_ticket.id}/show",
-        method: :get,
-        user: connection.username,
-        password: connection.password,
-        verify_ssl: false,
-        content_type: :json,
-        accept: :json
-      ))
+      @current_ticket.set_basic_data(basic_ticket_data)
       @current_ticket
     end
+
+    private
+
+      def basic_ticket_data(ticket_id = nil)
+        ticket_id ||= @current_ticket.id
+        RestClient::Request.execute(
+          url: "#{connection.full_path}ticket/#{ticket_id}/show",
+          method: :get,
+          user: connection.username,
+          password: connection.password,
+          verify_ssl: false,
+          content_type: :json,
+          accept: :json
+        )
+      end
   end
 end

@@ -56,18 +56,17 @@ module RTApi
       end
 
       describe 'instance_methods' do
-        specify { should respond_to :parse_basic_ticket_data }
+        specify { should respond_to :set_basic_data }
 
-        describe '#parse_basic_ticket_data' do
-          let(:data_string) { "RT/3.8.2 200 Ok\n\nid: ticket/5509855\nQueue: Technology\nOwner: b.wherry\nCreator: a.curin\nSubject: SSL Pricing Description in VAR Stores - SEV3\nStatus: stalled\nPriority: 75\nInitialPriority: 75\nFinalPriority: 0\nRequestors: a.curin@uber.com.au\nCc:\nAdminCc:\nCreated: Tue Mar 25 16:42:44 2014\nStarts: Not set\nStarted: Thu Mar 27 11:47:12 2014\nDue: Not set\nResolved: Not set\nTold: Fri Apr 11 12:38:24 2014\nLastUpdated: Fri Apr 11 12:38:24 2014\nTimeEstimated: 0\nTimeWorked: 0\nTimeLeft: 0\nCF.{Subscription ID}: \nCF.{Classification}: \nCF.{Customer ID}: \n\n" }
+        describe '#set_basic_data' do
           it 'should require a string argument' do
-            expect{ticket.parse_basic_ticket_data}.to raise_error(ArgumentError)
+            expect{ticket.set_basic_data}.to raise_error(ArgumentError)
           end
 
           context 'with a valid data_string argument' do
-
+            let(:data_string) { "RT/3.8.2 200 Ok\n\nid: ticket/5509855\nQueue: Technology\nOwner: b.wherry\nCreator: a.curin\nSubject: SSL Pricing Description in VAR Stores - SEV3\nStatus: stalled\nPriority: 75\nInitialPriority: 75\nFinalPriority: 0\nRequestors: a.curin@uber.com.au\nCc:\nAdminCc:\nCreated: Tue Mar 25 16:42:44 2014\nStarts: Not set\nStarted: Thu Mar 27 11:47:12 2014\nDue: Not set\nResolved: Not set\nTold: Fri Apr 11 12:38:24 2014\nLastUpdated: Fri Apr 11 12:38:24 2014\nTimeEstimated: 0\nTimeWorked: 0\nTimeLeft: 0\nCF.{Subscription ID}: 987654321\nCF.{Classification}: \nCF.{Customer ID}: 123456789\n\n" }
             it 'should set @queue' do
-              expect{ticket.parse_basic_ticket_data(data_string)}
+              expect{ticket.set_basic_data(data_string)}
                 .to change{ticket.queue}.from(nil).to('Technology')
             end
           end
