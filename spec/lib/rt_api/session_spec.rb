@@ -24,6 +24,7 @@ module RTApi
 
         let(:session) {RTApi::Session.new }
 
+        specify { should respond_to :create_ticket          }
         specify { should respond_to :get_ticket             }
         specify { should respond_to :set_basic_ticket_data  }
       end
@@ -40,6 +41,43 @@ module RTApi
 
           it 'should throw an RTApi::ConnectionError' do
             expect{RTApi::Session.new}.to raise_error(RTApi::ConnectionError)
+          end
+        end
+      end
+
+      describe '#create_ticket' do
+        it 'should require a content argument' do
+          expect{session.create_ticket}.to raise_error(ArgumentError)
+        end
+
+        context 'with a valid content argument' do
+          let(:content) do
+            {
+              Queue: 'Technology',
+              Requestor: 'test_user@test.com',
+              Subject: 'Test Ticket',
+              Text: "This is a test ticket.\nPlease ignore this message."
+            }
+          end
+          let(:ticket_id) { 5875871 }
+
+          before do
+            allow(RestClient::Request).to receive(:execute).and_return("RT/3.8.2 200 Ok\n\n# Ticket #{ticket_id} created.\n\n")
+            allow(session).to receive(:get_ticket).with(ticket_id).and_return(RTApi::Ticket.new(ticket_id))
+          end
+
+          it 'should call #build_ticket_content' do
+            expect(session).to receive(:build_ticket_content)
+            session.create_ticket(content)
+          end
+
+          it 'should call #get_ticket on the returned ticket id' do
+            expect(session).to receive(:get_ticket).with(ticket_id)
+            session.create_ticket(content)
+          end
+
+          it 'should return the new ticket' do
+            expect(session.create_ticket(content)).to be_an_instance_of(RTApi::Ticket)
           end
         end
       end
@@ -83,6 +121,36 @@ module RTApi
 
           it 'should return the updated RTApi::Ticket' do
             expect(session.set_basic_ticket_data).to be_an_instance_of(RTApi::Ticket)
+          end
+        end
+      end
+    end
+
+    describe 'private instance methods' do
+      specify { should_not respond_to :build_ticket_content }
+
+      describe '#build_ticket_content' do
+        it 'should require a hash argument' do
+          expect{session.send(:build_ticket_content)}.to raise_error(ArgumentError)
+        end
+
+        context 'with a valid hash argument' do
+          let(:content_hash) do
+            {
+              Queue: 'Technology',
+              Requestor: 'test_user@test.com',
+              Text: "Blahblah\nBlah\nWibble"
+            }
+          end
+
+          it 'should return a String' do
+            expect(session.send(:build_ticket_content, content_hash))
+              .to be_an_instance_of(String)
+          end
+
+          it 'should return the correct content' do
+            expect(session.send(:build_ticket_content, content_hash))
+              .to eq("id: ticket/new\nQueue: Technology\nRequestor: test_user@test.com\nText: Blahblah\n Blah\n Wibble")
           end
         end
       end

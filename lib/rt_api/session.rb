@@ -25,6 +25,21 @@ module RTApi
       raise(RTApi::ConnectionError.new('The connection arguments are invalid.')) unless @connection.valid?
     end
 
+    def create_ticket(content)
+      response = RestClient::Request.execute(
+        url: "#{connection.full_path}ticket/new",
+        method: :post,
+        user: connection.username,
+        password: connection.password,
+        payload: { content: build_ticket_content(content) },
+        verify_ssl: false,
+        content_type: :json,
+        accept: :json
+      )
+      ticket_id_regex = /Ticket\s+(\d+)\s+/
+      get_ticket(response.scan(ticket_id_regex)[0][0].to_i)
+    end
+
     def get_ticket(ticket_id)
       @current_ticket = RTApi::Ticket.new(ticket_id)
       set_basic_ticket_data
@@ -49,6 +64,14 @@ module RTApi
           content_type: :json,
           accept: :json
         )
+      end
+
+      def build_ticket_content(content_hash)
+        content = "id: ticket/new"
+        content_hash.inject(content) do |result, (k, v)|
+          result << ("\n#{k}: " +  (k == :Text ? v.gsub("\n", "\n ") : v))
+          result
+        end
       end
   end
 end
