@@ -18,6 +18,9 @@ module RTApi
       @id = ticket_id
     end
 
+    def history
+    end
+
     def set_basic_data(raw_string)
       attribute_hash = parse_basic_data_string(raw_string)
       attribute_hash.each_pair do |k, v|

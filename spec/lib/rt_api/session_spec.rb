@@ -26,6 +26,7 @@ module RTApi
 
         specify { should respond_to :create_ticket          }
         specify { should respond_to :get_ticket             }
+        specify { should respond_to :history                }
         specify { should respond_to :set_basic_ticket_data  }
       end
 
@@ -41,6 +42,50 @@ module RTApi
 
           it 'should throw an RTApi::ConnectionError' do
             expect{RTApi::Session.new}.to raise_error(RTApi::ConnectionError)
+          end
+        end
+      end
+
+      describe '#history' do
+        let(:ticket) { RTApi::Ticket.new(12345678) }
+
+        before do
+          session.instance_variable_set('@current_ticket', ticket)
+          allow(ticket).to receive(:history).and_return([1, 2])
+        end
+
+        it 'should call #history on @current_ticket' do
+          expect(session.current_ticket).to receive(:history)
+          session.history
+        end
+
+        context 'when ticket#history is empty' do
+          before do
+            allow(ticket).to receive(:history).and_return([])
+            allow(session.current_ticket).to receive(:set_history)
+            allow(session).to receive(:lookup_ticket_history).and_return([])
+          end
+
+          it 'should call #lookup_ticket_history' do
+            expect(session).to receive(:lookup_ticket_history).with(ticket.id)
+            session.history
+          end
+
+          it 'should #set_history on @current_ticket' do
+            expect(session.current_ticket).to receive(:set_history)
+            session.history
+          end
+        end
+
+        context 'when ticket#history is not empty' do
+          it 'should not call #lookup_ticket_history' do
+            expect(session).to_not receive(:lookup_ticket_history)
+            session.history
+          end
+
+          it 'should not call #set_history on @current_ticket' do
+            expect(session.current_ticket).to_not receive(:set_history)
+            session.history
           end
         end
       end

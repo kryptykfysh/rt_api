@@ -56,6 +56,7 @@ module RTApi
       end
 
       describe 'instance_methods' do
+        specify { should respond_to :history        }
         specify { should respond_to :set_basic_data }
 
         describe '#set_basic_data' do

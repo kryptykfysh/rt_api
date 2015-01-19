@@ -25,6 +25,12 @@ module RTApi
       raise(RTApi::ConnectionError.new('The connection arguments are invalid.')) unless @connection.valid?
     end
 
+    def history
+      return @current_ticket.history unless@current_ticket.history.empty?
+      @current_ticket.set_history(lookup_ticket_history(@current_ticket.id))
+      @current_ticket.history
+    end
+
     def create_ticket(content)
       response = RestClient::Request.execute(
         url: "#{connection.full_path}ticket/new",
@@ -72,6 +78,18 @@ module RTApi
           result << ("\n#{k}: " +  (k == :Text ? v.gsub("\n", "\n ") : v))
           result
         end
+      end
+
+      def lookup_ticket_history(ticket_id = nil)
+        RestClient::Request.execute(
+          url: "#{connection.full_path}ticket/#{ticket_id}/history?format=l",
+          method: :get,
+          user: connection.username,
+          password: connection.password,
+          verify_ssl: false,
+          content_type: :json,
+          accept: :json
+        )
       end
   end
 end
