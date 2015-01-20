@@ -172,7 +172,8 @@ module RTApi
     end
 
     describe 'private instance methods' do
-      specify { should_not respond_to :build_ticket_content }
+      specify { should_not respond_to :build_ticket_content   }
+      specify { should_not respond_to :lookup_ticket_history  }
 
       describe '#build_ticket_content' do
         it 'should require a hash argument' do
@@ -197,6 +198,18 @@ module RTApi
             expect(session.send(:build_ticket_content, content_hash))
               .to eq("id: ticket/new\nQueue: Technology\nRequestor: test_user@test.com\nText: Blahblah\n Blah\n Wibble")
           end
+        end
+      end
+
+      describe '#lookup_ticket_history' do
+        before do
+          allow(RestClient::Request).to receive(:execute).and_return([])
+          allow(session.current_ticket).to receive(:id).and_return(42)
+        end
+
+        it 'should call the RT Api for ticket info' do
+          expect(RestClient::Request).to receive(:execute)
+          session.send(:lookup_ticket_history)
         end
       end
     end

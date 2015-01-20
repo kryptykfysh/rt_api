@@ -26,7 +26,7 @@ module RTApi
     end
 
     def history
-      return @current_ticket.history unless@current_ticket.history.empty?
+      return @current_ticket.history unless @current_ticket.history.empty?
       @current_ticket.set_history(lookup_ticket_history(@current_ticket.id))
       @current_ticket.history
     end
@@ -81,6 +81,7 @@ module RTApi
       end
 
       def lookup_ticket_history(ticket_id = nil)
+        ticket_id || @current_ticket.id
         RestClient::Request.execute(
           url: "#{connection.full_path}ticket/#{ticket_id}/history?format=l",
           method: :get,

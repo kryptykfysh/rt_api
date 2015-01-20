@@ -1,0 +1,751 @@
+RT/3.8.2 200 Ok
+
+# 22/22 (id/36725765/total)
+
+id: 36725765
+Ticket: 5509855
+TimeTaken: 0
+Type: Create
+Field: 
+OldValue: 
+NewValue: 
+Data: 
+Description: Ticket created by a.curin
+
+Content: VAR stores have the incorrect period displayed during the SSL ordering
+         process.
+         
+         For example:
+         
+         Subscription Period:
+         1 Year(s) 	 -  	$540.00/ mo
+         
+         We need to get rid of the /mo.
+         
+         I have tested the following code in one of my test accounts and it has
+         removed the /mo as well as the $0.00 pricing on plans which require
+         resources:
+         
+         --------------------------------
+         
+         Found in pplink.tpl
+         
+         {if !$IsOTFI}{$period.Period} {$period.textPeriodType}{/if} 
+         </td> 
+         <td style="width: 20px;" align="center" valign="middle">{if !$IsOTFI &&
+         $period.textPrice != 0}&nbsp;-&nbsp;{/if}</td> 
+         <td class="PlanPrice" align="left" valign="middle"> 
+         <span class="Comment Price">{if
+         $periodPriceCalcType=="true"}{$period.FeeText}{elseif
+         $periodPriceCalcType=="auto"}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.ExtendedPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{elseif
+         $period.textPrice != 0} 
+         {$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{/if}</span>
+         
+         {if $period.OldPrice && $period.OldPrice != $period.ExtendedPrice} 
+         &nbsp;<span
+         class="PBA-oldprice">{$smarty.session.LANG.CURRENCY_PREFIX}{$period.OldPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}</span>
+         
+         {/if}
+         
+         --------------------------------
+         
+         Found in pp_radio.tpl
+         
+         {*<td style="width: 20px;" align="center"
+         valign="middle">&nbsp;-&nbsp;</td> 
+         <td style="width: 60px;" align="left" valign="middle"> 
+         {$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}
+         
+         </td>*} 
+         <td style="width: 20px;" align="center" valign="middle">{if
+         $period.textPrice !=0}&nbsp;-&nbsp;{/if}</td> 
+         <td style="width: 180px;" align="left" valign="middle"> 
+         <span class="Comment Price">{if
+         $periodPriceCalcType=="true"}{$period.FeeText}{elseif
+         $periodPriceCalcType=="auto"}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.ExtendedPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{elseif
+         $period.textPrice !=
+         0}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{/if}</span>
+         
+         {if $period.OldPrice && $period.OldPrice != $period.ExtendedPrice} 
+         &nbsp;<span
+         class="PBA-oldprice">{$smarty.session.LANG.CURRENCY_PREFIX}{$period.OldPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}</span>
+         
+         {/if} 
+         </td>
+         
+         --------------------------------
+         
+         If the above looks ok, the existing section of code in the listed tpl
+         files should be replaced with the above code.
+
+
+Creator: a.curin
+Created: 2014-03-25 05:42:44
+
+Attachments: 
+             15996140: untitled (0b)
+             15996141: untitled (2.3k)
+             15996142: FireShot Screen Capture #505 - 'Mangano IT Solutions Hosting' - hosting_manganoit_com_au_store_index_php_NAME_PATH=SSL_CERTIFICATES.png (16.2k)
+
+
+--
+
+# 22/22 (id/36725766/total)
+
+id: 36725766
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-24145-1395726164-1704.5509855-153-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: 
+         Tue Mar 25 16:42:44 2014: Request 5509855 was acted upon.
+          Transaction: Ticket created by a.curin
+                Queue: Technology
+              Subject: SSL Pricing Description in VAR Stores - SEV3
+                Owner: Nobody
+           Requestors: a.curin@uber.com.au
+               Status: new
+          Ticket <URL: http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855 >
+         
+         
+         VAR stores have the incorrect period displayed during the SSL ordering
+         process.
+         
+         For example:
+         
+         Subscription Period:
+         1 Year(s) 	 -  	$540.00/ mo
+         
+         We need to get rid of the /mo.
+         
+         I have tested the following code in one of my test accounts and it has
+         removed the /mo as well as the $0.00 pricing on plans which require
+         resources:
+         
+         --------------------------------
+         
+         Found in pplink.tpl
+         
+         {if !$IsOTFI}{$period.Period} {$period.textPeriodType}{/if} 
+         </td> 
+         <td style="width: 20px;" align="center" valign="middle">{if !$IsOTFI &&
+         $period.textPrice != 0}&nbsp;-&nbsp;{/if}</td> 
+         <td class="PlanPrice" align="left" valign="middle"> 
+         <span class="Comment Price">{if
+         $periodPriceCalcType=="true"}{$period.FeeText}{elseif
+         $periodPriceCalcType=="auto"}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.ExtendedPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{elseif
+         $period.textPrice != 0} 
+         {$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{/if}</span>
+         
+         {if $period.OldPrice && $period.OldPrice != $period.ExtendedPrice} 
+         &nbsp;<span
+         class="PBA-oldprice">{$smarty.session.LANG.CURRENCY_PREFIX}{$period.OldPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}</span>
+         
+         {/if}
+         
+         --------------------------------
+         
+         Found in pp_radio.tpl
+         
+         {*<td style="width: 20px;" align="center"
+         valign="middle">&nbsp;-&nbsp;</td> 
+         <td style="width: 60px;" align="left" valign="middle"> 
+         {$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}
+         
+         </td>*} 
+         <td style="width: 20px;" align="center" valign="middle">{if
+         $period.textPrice !=0}&nbsp;-&nbsp;{/if}</td> 
+         <td style="width: 180px;" align="left" valign="middle"> 
+         <span class="Comment Price">{if
+         $periodPriceCalcType=="true"}{$period.FeeText}{elseif
+         $periodPriceCalcType=="auto"}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.ExtendedPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{elseif
+         $period.textPrice !=
+         0}{$smarty.session.LANG.CURRENCY_PREFIX}{$period.textPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}{/if}</span>
+         
+         {if $period.OldPrice && $period.OldPrice != $period.ExtendedPrice} 
+         &nbsp;<span
+         class="PBA-oldprice">{$smarty.session.LANG.CURRENCY_PREFIX}{$period.OldPrice|numformat}{$smarty.session.LANG.CURRENCY_POSTFIX}</span>
+         
+         {/if} 
+         </td>
+         
+         --------------------------------
+         
+         If the above looks ok, the existing section of code in the listed tpl
+         files should be replaced with the above code.
+         
+
+
+Creator: RT_System
+Created: 2014-03-25 05:42:45
+
+Attachments: 
+             15996143: untitled (2.7k)
+
+
+--
+
+# 22/22 (id/36760575/total)
+
+id: 36760575
+Ticket: 5509855
+TimeTaken: 0
+Type: Give
+Field: Owner
+OldValue: 6
+NewValue: 12463117
+Data: 
+Description: Given to b.wherry by j.baird
+Content: This transaction appears to have no content
+Creator: j.baird
+Created: 2014-03-26 22:44:09
+Attachments: 
+
+--
+
+# 22/22 (id/36760576/total)
+
+id: 36760576
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-8169-1395873850-1042.5509855-2-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: 
+         Thu Mar 27 09:44:09 2014: Request 5509855 was acted upon.
+          Transaction: Given to b.wherry by j.baird
+                Queue: Technology
+              Subject: SSL Pricing Description in VAR Stores - SEV3
+                Owner: b.wherry
+           Requestors: a.curin@uber.com.au
+               Status: new
+          Ticket <URL: http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855 >
+         
+         
+         This transaction appears to have no content
+
+
+Creator: RT_System
+Created: 2014-03-26 22:44:10
+
+Attachments: 
+             16013875: untitled (378b)
+
+
+--
+
+# 22/22 (id/36762676/total)
+
+id: 36762676
+Ticket: 5509855
+TimeTaken: 0
+Type: Comment
+Field: 
+OldValue: 
+NewValue: 
+Data: No Subject
+Description: Comments added by b.wherry
+Content: John confirmed that having to synch this change across all stores will need Kris to sign off on.
+Creator: b.wherry
+Created: 2014-03-27 00:47:12
+
+Attachments: 
+             16014960: untitled (96b)
+
+
+--
+
+# 22/22 (id/36762677/total)
+
+id: 36762677
+Ticket: 5509855
+TimeTaken: 0
+Type: CommentEmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-24904-1395881232-1395.5509855-8-0@rt.ahq.net.au>
+Description: Outgoing email about a comment recorded by RT_System
+
+Content: 
+         http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855
+         This is a comment.  It is not sent to the Requestor(s):
+         
+         John confirmed that having to synch this change across all stores will need Kris to sign off on.
+
+
+Creator: RT_System
+Created: 2014-03-27 00:47:12
+
+Attachments: 
+             16014961: untitled (210b)
+
+
+--
+
+# 22/22 (id/36762678/total)
+
+id: 36762678
+Ticket: 5509855
+TimeTaken: 0
+Type: Status
+Field: Status
+OldValue: new
+NewValue: open
+Data: 
+Description: Status changed from 'new' to 'open' by b.wherry
+Content: This transaction appears to have no content
+Creator: b.wherry
+Created: 2014-03-27 00:47:12
+Attachments: 
+
+--
+
+# 22/22 (id/36762679/total)
+
+id: 36762679
+Ticket: 5509855
+TimeTaken: 0
+Type: Give
+Field: Owner
+OldValue: 12463117
+NewValue: 11704572
+Data: 
+Description: Given to k.bailey by b.wherry
+Content: This transaction appears to have no content
+Creator: b.wherry
+Created: 2014-03-27 00:47:12
+Attachments: 
+
+--
+
+# 22/22 (id/36762680/total)
+
+id: 36762680
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-24904-1395881232-198.5509855-2-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: 
+         Thu Mar 27 11:47:12 2014: Request 5509855 was acted upon.
+          Transaction: Given to k.bailey by b.wherry
+                Queue: Technology
+              Subject: SSL Pricing Description in VAR Stores - SEV3
+                Owner: k.bailey
+           Requestors: a.curin@uber.com.au
+               Status: open
+          Ticket <URL: http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855 >
+         
+         
+         This transaction appears to have no content
+
+
+Creator: RT_System
+Created: 2014-03-27 00:47:13
+
+Attachments: 
+             16014962: untitled (380b)
+
+
+--
+
+# 22/22 (id/36974303/total)
+
+id: 36974303
+Ticket: 5509855
+TimeTaken: 0
+Type: Steal
+Field: Owner
+OldValue: 11704572
+NewValue: 9180246
+Data: 
+Description: Stolen from k.bailey by d.varey
+Content: This transaction appears to have no content
+Creator: d.varey
+Created: 2014-04-10 23:55:57
+Attachments: 
+
+--
+
+# 22/22 (id/36974305/total)
+
+id: 36974305
+Ticket: 5509855
+TimeTaken: 0
+Type: Give
+Field: Owner
+OldValue: 9180246
+NewValue: 12463117
+Data: 
+Description: Given to b.wherry by d.varey
+Content: This transaction appears to have no content
+Creator: d.varey
+Created: 2014-04-10 23:56:08
+Attachments: 
+
+--
+
+# 22/22 (id/36974306/total)
+
+id: 36974306
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-17933-1397174168-1312.5509855-2-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: 
+         Fri Apr 11 09:56:08 2014: Request 5509855 was acted upon.
+          Transaction: Given to b.wherry by d.varey
+                Queue: Technology
+              Subject: SSL Pricing Description in VAR Stores - SEV3
+                Owner: b.wherry
+           Requestors: a.curin@uber.com.au
+               Status: open
+          Ticket <URL: http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855 >
+         
+         
+         This transaction appears to have no content
+
+
+Creator: RT_System
+Created: 2014-04-10 23:56:08
+
+Attachments: 
+             16139219: untitled (379b)
+
+
+--
+
+# 22/22 (id/36974314/total)
+
+id: 36974314
+Ticket: 5509855
+TimeTaken: 0
+Type: Comment
+Field: 
+OldValue: 
+NewValue: 
+Data: No Subject
+Description: Comments added by d.varey
+
+Content: Brian,
+         Can you put this through as a change request and if approved, make it 
+         happen.
+         
+         
+         - Dwayne.
+
+Creator: d.varey
+Created: 2014-04-10 23:56:43
+
+Attachments: 
+             16139226: untitled (97b)
+
+
+--
+
+# 22/22 (id/36974315/total)
+
+id: 36974315
+Ticket: 5509855
+TimeTaken: 0
+Type: CommentEmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-17893-1397174203-1557.5509855-8-0@rt.ahq.net.au>
+Description: Outgoing email about a comment recorded by RT_System
+
+Content: 
+         http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855
+         This is a comment.  It is not sent to the Requestor(s):
+         
+         Brian,
+         Can you put this through as a change request and if approved, make it 
+         happen.
+         
+         
+         - Dwayne.
+
+
+Creator: RT_System
+Created: 2014-04-10 23:56:43
+
+Attachments: 
+             16139227: untitled (211b)
+
+
+--
+
+# 22/22 (id/36974480/total)
+
+id: 36974480
+Ticket: 5509855
+TimeTaken: 0
+Type: Comment
+Field: 
+OldValue: 
+NewValue: 
+Data: No Subject
+Description: Comments added by b.wherry
+
+Content: Change request logged: http://sharesquare.ahq.net.au/technology/_layouts/listform.aspx?
+         PageType=4&ListId={342D8D92-58B4-4971-9CFB-
+         CE79E60BDE5D}&ID=81&ContentTypeID=0x0108006D8A027A37AE0244AE0B56A605047037
+
+Creator: b.wherry
+Created: 2014-04-11 00:05:34
+
+Attachments: 
+             16139292: untitled (206b)
+
+
+--
+
+# 22/22 (id/36974481/total)
+
+id: 36974481
+Ticket: 5509855
+TimeTaken: 0
+Type: CommentEmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-19608-1397174734-1747.5509855-8-0@rt.ahq.net.au>
+Description: Outgoing email about a comment recorded by RT_System
+
+Content: 
+         http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855
+         This is a comment.  It is not sent to the Requestor(s):
+         
+         Change request logged: http://sharesquare.ahq.net.au/technology/_layouts/listform.aspx?
+         PageType=4&ListId={342D8D92-58B4-4971-9CFB-
+         CE79E60BDE5D}&ID=81&ContentTypeID=0x0108006D8A027A37AE0244AE0B56A605047037
+
+
+Creator: RT_System
+Created: 2014-04-11 00:05:35
+
+Attachments: 
+             16139293: untitled (320b)
+
+
+--
+
+# 22/22 (id/36977230/total)
+
+id: 36977230
+Ticket: 5509855
+TimeTaken: 0
+Type: Comment
+Field: 
+OldValue: 
+NewValue: 
+Data: No Subject
+Description: Comments added by b.wherry
+
+Content: To remove the /mo:
+         
+         $periodPriceCalcType, which is a GENERAL variable in store settings, needs to be set to 'auto'
+         
+         In PBA, go Online Store --> More --> Advanced Settings.
+         
+         PERIOD_PRICE_CALC_TYPE was initially set to 'false'. Setting this to 'auto' removes the /mo from 
+         the store pages.
+         
+         As for the $0 pricing removal, how do you want this applied? I'll talk to you about it, but this is 
+         just a reminder for me. :)
+
+Creator: b.wherry
+Created: 2014-04-11 02:35:12
+
+Attachments: 
+             16141018: untitled (416b)
+
+
+--
+
+# 22/22 (id/36977231/total)
+
+id: 36977231
+Ticket: 5509855
+TimeTaken: 0
+Type: CommentEmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-28280-1397183712-1192.5509855-8-0@rt.ahq.net.au>
+Description: Outgoing email about a comment recorded by RT_System
+
+Content: 
+         http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855
+         This is a comment.  It is not sent to the Requestor(s):
+         
+         To remove the /mo:
+         
+         $periodPriceCalcType, which is a GENERAL variable in store settings, needs to be set to 'auto'
+         
+         In PBA, go Online Store --> More --> Advanced Settings.
+         
+         PERIOD_PRICE_CALC_TYPE was initially set to 'false'. Setting this to 'auto' removes the /mo from 
+         the store pages.
+         
+         As for the $0 pricing removal, how do you want this applied? I'll talk to you about it, but this is 
+         just a reminder for me. :)
+
+
+Creator: RT_System
+Created: 2014-04-11 02:35:13
+
+Attachments: 
+             16141019: untitled (530b)
+
+
+--
+
+# 22/22 (id/36977248/total)
+
+id: 36977248
+Ticket: 5509855
+TimeTaken: 0
+Type: Correspond
+Field: 
+OldValue: 
+NewValue: 
+Data: No Subject
+Description: Correspondence added by b.wherry
+
+Content: To remove the /mo:
+         
+         $periodPriceCalcType, which is a GENERAL variable in store settings, needs to be set to 'auto'
+         
+         In PBA, go Online Store --> More --> Advanced Settings.
+         
+         PERIOD_PRICE_CALC_TYPE was initially set to 'false'. Setting this to 'auto' removes the /mo from 
+         the store pages.
+         
+         As for the $0 pricing removal, how do you want this applied? I'll talk to you about it, but this is 
+         just a reminder for me. :)
+
+Creator: b.wherry
+Created: 2014-04-11 02:38:24
+
+Attachments: 
+             16141023: untitled (416b)
+
+
+--
+
+# 22/22 (id/36977249/total)
+
+id: 36977249
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-30015-1397183904-698.5509855-5-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: 
+         <URL: http://rt.ahq.net.au:80/Ticket/Display.html?id=5509855 >
+         
+         To remove the /mo:
+         
+         $periodPriceCalcType, which is a GENERAL variable in store settings, needs to be set to 'auto'
+         
+         In PBA, go Online Store --> More --> Advanced Settings.
+         
+         PERIOD_PRICE_CALC_TYPE was initially set to 'false'. Setting this to 'auto' removes the /mo from 
+         the store pages.
+         
+         As for the $0 pricing removal, how do you want this applied? I'll talk to you about it, but this is 
+         just a reminder for me. :)
+
+
+Creator: RT_System
+Created: 2014-04-11 02:38:24
+
+Attachments: 
+             16141024: untitled (482b)
+
+
+--
+
+# 22/22 (id/36977250/total)
+
+id: 36977250
+Ticket: 5509855
+TimeTaken: 0
+Type: EmailRecord
+Field: 
+OldValue: 
+NewValue: 
+Data: <rt-3.8.2-30015-1397183904-1830.5509855-61-0@rt.ahq.net.au>
+Description: Outgoing email recorded by RT_System
+
+Content: To remove the /mo:
+         
+         $periodPriceCalcType, which is a GENERAL variable in store settings, needs to be set to 'auto'
+         
+         In PBA, go Online Store --> More --> Advanced Settings.
+         
+         PERIOD_PRICE_CALC_TYPE was initially set to 'false'. Setting this to 'auto' removes the /mo from 
+         the store pages.
+         
+         As for the $0 pricing removal, how do you want this applied? I'll talk to you about it, but this is 
+         just a reminder for me. :)
+         
+         -- 
+         Brian Wherry
+         Customer Service Representative
+         
+         Your ticket ID: 5509855
+         
+         
+
+
+Creator: RT_System
+Created: 2014-04-11 02:38:24
+
+Attachments: 
+             16141025: untitled (494b)
+
+
+--
+
+# 22/22 (id/36977251/total)
+
+id: 36977251
+Ticket: 5509855
+TimeTaken: 0
+Type: Status
+Field: Status
+OldValue: open
+NewValue: stalled
+Data: 
+Description: Status changed from 'open' to 'stalled' by b.wherry
+Content: This transaction appears to have no content
+Creator: b.wherry
+Created: 2014-04-11 02:38:24
+Attachments: 
+
