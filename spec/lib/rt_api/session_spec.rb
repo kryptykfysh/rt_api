@@ -24,9 +24,12 @@ module RTApi
 
         let(:session) {RTApi::Session.new }
 
+        specify { should respond_to :add_comment            }
+        specify { should respond_to :add_correspondence     }
         specify { should respond_to :create_ticket          }
         specify { should respond_to :get_ticket             }
         specify { should respond_to :history                }
+        specify { should respond_to :refresh_history        }
         specify { should respond_to :set_basic_ticket_data  }
       end
 
@@ -42,6 +45,58 @@ module RTApi
 
           it 'should throw an RTApi::ConnectionError' do
             expect{RTApi::Session.new}.to raise_error(RTApi::ConnectionError)
+          end
+        end
+      end
+
+      describe '#add_comment' do
+        let(:text) { 'This a test comment.' }
+
+        before do
+          allow(RestClient::Request).to receive(:execute).and_return("RT/3.8.2 200 Ok\n\n# Message recorded\n\n")
+          session.instance_variable_set('@current_ticket', Ticket.new(42))
+          allow(session).to receive(:refresh_history).and_return([])
+        end
+
+        it 'should require a :text argument' do
+          expect{session.add_comment}.to raise_error(ArgumentError)
+        end
+
+        context 'with a valid :text argument' do
+          it 'should call RestClient::Request.execute' do
+            expect(RestClient::Request).to receive(:execute)
+            session.add_comment(text: text)
+          end
+        end
+
+          it 'should #refresh_history on completion' do
+            expect(session).to receive(:refresh_history)
+            session.add_correspondence(text: text)
+          end
+      end
+
+      describe '#add_correspondence' do
+        let(:text) { 'This a test correspondence.' }
+
+        before do
+          allow(RestClient::Request).to receive(:execute).and_return("RT/3.8.2 200 Ok\n\n# Message recorded\n\n")
+          session.instance_variable_set('@current_ticket', Ticket.new(42))
+          allow(session).to receive(:refresh_history).and_return([])
+        end
+
+        it 'should require a :text argument' do
+          expect{session.add_correspondence}.to raise_error(ArgumentError)
+        end
+
+        context 'with a valid :text argument' do
+          it 'should call RestClient::Request.execute' do
+            expect(RestClient::Request).to receive(:execute)
+            session.add_correspondence(text: text)
+          end
+
+          it 'should #refresh_history on completion' do
+            expect(session).to receive(:refresh_history)
+            session.add_correspondence(text: text)
           end
         end
       end
@@ -196,7 +251,7 @@ module RTApi
 
           it 'should return the correct content' do
             expect(session.send(:build_ticket_content, content_hash))
-              .to eq("id: ticket/new\nQueue: Technology\nRequestor: test_user@test.com\nText: Blahblah\n Blah\n Wibble")
+              .to eq("\nQueue: Technology\nRequestor: test_user@test.com\nText: Blahblah\n Blah\n Wibble")
           end
         end
       end
