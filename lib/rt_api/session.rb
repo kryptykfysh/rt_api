@@ -94,7 +94,7 @@ module RTApi
 
     def refresh_history
       @current_ticket.set_history(lookup_ticket_history(@current_ticket.id))
-      @current_ticket.history
+      history
     end
 
     def set_basic_ticket_data

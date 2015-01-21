@@ -207,6 +207,24 @@ module RTApi
         end
       end
 
+      describe '#refresh_history' do
+        before do
+          session.instance_variable_set('@current_ticket', Ticket.new(42))
+          allow(session.current_ticket).to receive(:set_history).and_return('OK')
+          allow(session).to receive(:lookup_ticket_history).and_return([])
+          allow(session).to receive(:history).and_return('The session history')
+        end
+
+        it 'should call #set_history on @current_ticket' do
+          expect(session.current_ticket).to receive(:set_history)
+          session.refresh_history
+        end
+
+        it 'should return #history' do
+          expect(session.refresh_history).to eq(session.history)
+        end
+      end
+
       describe '#set_basic_ticket_data' do
         before do
           allow(session.connection).to receive(:full_path).and_return('')
