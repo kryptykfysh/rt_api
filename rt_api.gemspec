@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.9', '>= 0.9.1'
   spec.add_development_dependency 'libnotify', '~>  0.9', '>= 0.9.1'
 
-  spec.add_runtime_dependency 'activesupport', '~> 4.2', '>= 4.2.0'
+  spec.add_runtime_dependency 'activesupport', '~> 4', '>= 4.1.0'
   spec.add_runtime_dependency 'rest-client', '~> 1.7', '>= 1.7.2'
 end
