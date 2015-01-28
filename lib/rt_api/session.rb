@@ -86,6 +86,19 @@ module RTApi
       get_ticket(response.scan(ticket_id_regex)[0][0].to_i)
     end
 
+    def edit_ticket(field_hash)
+      RestClient::Request.execute(
+        url: "#{connection.full_path}ticket/#{ticket_id}/edit",
+        method: :post,
+        user: connection.username,
+        password: connection.password,
+        payload:  { content: build_ticket_content(field_hash) },
+        verify_ssl: false,
+        content_type: :json,
+        accept: :json
+      )
+    end
+
     def get_ticket(ticket_id)
       @current_ticket = RTApi::Ticket.new(ticket_id)
       set_basic_ticket_data
