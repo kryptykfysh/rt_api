@@ -86,7 +86,7 @@ module RTApi
       get_ticket(response.scan(ticket_id_regex)[0][0].to_i)
     end
 
-    def edit_ticket(field_hash)
+    def edit_ticket(field_hash:, ticket_id: @current_ticket.id)
       RestClient::Request.execute(
         url: "#{connection.full_path}ticket/#{ticket_id}/edit",
         method: :post,
